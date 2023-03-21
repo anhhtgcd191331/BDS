@@ -52,12 +52,14 @@ public class SearchService implements ISearchService {
 			.squareArea(searchDTO.getSquareArea())
 			.build();
 
-		return postRepository.findAll(Example.of(post, matcher))
-			.stream()
-			.map(postEntity -> postMapper.entityToDto(postEntity))
-			.filter(postDTO -> !postDTO.isSold())
-			.sorted(Comparator.comparing(PostDTO::getTotalLike))
-			.collect(Collectors.toList());
+		List<PostDTO> optionals = postRepository.findAll(Example.of(post, matcher))
+				.stream()
+				.map(postEntity -> postMapper.entityToDto(postEntity))
+				.filter(postDTO -> !postDTO.isSold())
+				.sorted(Comparator.comparing(PostDTO::getTotalLike))
+				.collect(Collectors.toList());
+
+		return optionals;
 	}
 
 }

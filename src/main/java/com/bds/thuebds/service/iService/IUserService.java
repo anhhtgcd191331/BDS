@@ -12,4 +12,5 @@ public interface IUserService {
 	List<UserDTO> getUserList(Pageable pageable);
 
 	UserDTO getUserByUsername(String username);
+	UserDTO getUserById(Long userId);
 }

@@ -79,6 +79,11 @@ public class UserService implements IUserService, UserDetailsService {
 		return userMapper.entityToDto(userRepository.getUserEntityByUsername(username));
 	}
 
+	@Override
+	public UserDTO getUserById(Long userId) {
+		return userMapper.entityToDto(userRepository.getUserEntityByUserId(userId));
+	}
+
 	private String checkDuplicatedUserByUserNameForSaveNew(UserDTO userDTO) {
 		UserEntity userExist = userRepository.getUserEntityByUsername(userDTO.getUsername());
 		if (userExist == null) {

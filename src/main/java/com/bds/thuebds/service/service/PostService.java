@@ -49,6 +49,7 @@ public class PostService implements IPostService {
 	@Override
 	public void saveNewPost(PostDTO postDTO, List<MultipartFile> images, MultipartFile video) throws IOException {
 		PostEntity postEntity = postMapper.dtoToEntity(postDTO);
+		postEntity.setTotalLike(0);
 		if (images != null) {
 			postEntity.setImageUrl(getFileUrls(images));
 		}
@@ -73,7 +74,7 @@ public class PostService implements IPostService {
 			.stream()
 			.map(postEntity -> postMapper.entityToDto(postEntity))
 			.filter(postDTO -> !postDTO.isDeleted())
-			.sorted(Comparator.comparing(PostDTO::getPostId).reversed())
+				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
 			.collect(Collectors.toList());
 	}
 

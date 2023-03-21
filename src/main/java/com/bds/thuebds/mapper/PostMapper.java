@@ -10,6 +10,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 @DecoratedWith(PostMapperDecorator.class)
 public interface PostMapper {
+	@Mapping(target = "postId", source = "id")
 	PostDTO entityToDto(PostEntity postEntity);
 	PostEntity dtoToEntity(PostDTO postDTO);
 
