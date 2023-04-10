@@ -74,7 +74,7 @@ public class PostService implements IPostService {
 			.stream()
 			.map(postEntity -> postMapper.entityToDto(postEntity))
 			.filter(postDTO -> !postDTO.isDeleted())
-				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
+			.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
 			.collect(Collectors.toList());
 	}
 

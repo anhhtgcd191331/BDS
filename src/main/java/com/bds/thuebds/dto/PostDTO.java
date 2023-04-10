@@ -27,4 +27,20 @@ public class PostDTO {
 	private Integer totalLike;
 	private boolean isDeleted;
 	private List<CommentPostDTO> commentPostDTOList;
+
+	public PostDTO(Long postId, String postTitle, String description, Integer numberOfRooms, Double squareArea, Double price, String detailsAddress, String imageUrl, String videoUrl, boolean isSold, String typeOfApartment, Long authorId, Integer totalLike) {
+		this.postId = postId;
+		this.postTitle = postTitle;
+		this.description = description;
+		this.numberOfRooms = numberOfRooms;
+		this.squareArea = squareArea;
+		this.price = price;
+		this.detailsAddress = detailsAddress;
+		this.imageUrl = imageUrl;
+		this.videoUrl = videoUrl;
+		this.isSold = isSold;
+		this.typeOfApartment = typeOfApartment;
+		this.authorId = authorId;
+		this.totalLike = totalLike;
+	}
 }

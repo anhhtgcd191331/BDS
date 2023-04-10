@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //      this line will accept some url that can be public without authentication
 		http.authorizeRequests()
 			.antMatchers("/v3/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
+			.antMatchers("/api/v1/post/list/**").permitAll()
+			.antMatchers("/api/v1/post/{postId}/**").permitAll()
 			.antMatchers("/**").hasAnyAuthority("admin", "mod", "guest", "member")
 
 			.anyRequest().authenticated().and().cors().configurationSource(request -> corsConfiguration);

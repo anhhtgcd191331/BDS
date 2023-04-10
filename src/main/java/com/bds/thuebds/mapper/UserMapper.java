@@ -12,8 +12,7 @@ import org.mapstruct.Mappings;
 @DecoratedWith(UserMapperDecorator.class)
 public interface UserMapper {
 	@Mappings({
-		@Mapping(target = "roleList", ignore = true),
-			@Mapping(target = "userId", source = "id")
+		@Mapping(target = "roleList", ignore = true)
 	})
 	UserDTO entityToDto(UserEntity userEntity);
 
