@@ -2,17 +2,18 @@ package com.bds.thuebds.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,11 +48,13 @@ public class PostEntity extends BaseEntity {
 	@NotNull
 	private String detailsAddress;
 
-	@Column(name = "image_url")
-	private String imageUrl;
+	@Column(name = "image_url_list")
+	@ElementCollection
+	private List<String> imageUrls;
 
-	@Column(name = "video_url")
-	private String videoUrl;
+	@Column(name = "video_url_list")
+	@ElementCollection
+	private List<String> videoUrls;
 
 	@Column(name = "is_sold")
 	@NotNull

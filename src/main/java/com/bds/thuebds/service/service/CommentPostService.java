@@ -41,7 +41,7 @@ public class CommentPostService implements ICommentPostService {
 	@Override
 	public CommentPostDTO saveNewComment(CommentPostDTO commentPostDTO) {
 		//		save notification
-		PostEntity postEntity = postRepository.findById(commentPostDTO.getCommentPostId())
+		PostEntity postEntity = postRepository.findById(commentPostDTO.getPostId())
 			.orElseThrow(EntityNotFoundException::new);
 		UserEntity commentary = userRepository.getUserEntityByUserId(commentPostDTO.getUserId());
 		UserEntity authorOfPost = userRepository

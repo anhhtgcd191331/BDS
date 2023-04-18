@@ -22,7 +22,7 @@ import javax.persistence.EntityNotFoundException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -47,14 +47,22 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public void saveNewPost(PostDTO postDTO, List<MultipartFile> images, MultipartFile video) throws IOException {
+	public void saveNewPost(PostDTO postDTO, List<MultipartFile> images, List<MultipartFile> videos) throws IOException {
 		PostEntity postEntity = postMapper.dtoToEntity(postDTO);
 		postEntity.setTotalLike(0);
-		if (images != null) {
-			postEntity.setImageUrl(getFileUrls(images));
+		if (images.size() != 0) {
+			List<String> imageUrls = new ArrayList<>();
+			for (MultipartFile multipartFile : images) {
+				imageUrls.add(getFileUrls(multipartFile));
+			}
+			postEntity.setImageUrls(imageUrls);
 		}
-		if (video != null) {
-			postEntity.setVideoUrl(uploadVideo(video));
+		if (videos.size() != 0) {
+			List<String> videoUrls = new ArrayList<>();
+			for (MultipartFile multipartFile : videos) {
+				videoUrls.add(getFileUrls(multipartFile));
+			}
+			postEntity.setVideoUrls(videoUrls);
 		}
 		postRepository.save(postEntity);
 	}
@@ -74,13 +82,18 @@ public class PostService implements IPostService {
 			.stream()
 			.map(postEntity -> postMapper.entityToDto(postEntity))
 			.filter(postDTO -> !postDTO.isDeleted())
-				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
+			.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
 			.collect(Collectors.toList());
 	}
 
 	@Override
 	public PostDTO getPostById(Long postId) {
 		return postMapper.entityToDto(postRepository.findById(postId).orElseThrow(EntityNotFoundException::new));
+	}
+
+	@Override
+	public Integer getTotalPost() {
+		return Math.toIntExact(postRepository.count());
 	}
 
 	private File convertMultipartToFile(MultipartFile file) throws IOException {
@@ -91,22 +104,9 @@ public class PostService implements IPostService {
 		return convertFile;
 	}
 
-	private String getFileUrls(List<MultipartFile> multipartFiles) throws IOException {
-		String fileUrl = null;
-		for (MultipartFile multipartFile : multipartFiles) {
-			File file = convertMultipartToFile(multipartFile);
-			String fileName = new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
-			fileUrl = AmazonKeys.END_POINT_URL + "/" + AmazonKeys.BUCKET_NAME + "/" + fileName;
-			s3Client
-				.putObject(new PutObjectRequest(AmazonKeys.BUCKET_NAME, fileName, file)
-					.withCannedAcl(CannedAccessControlList.PublicRead));
-		}
-		return fileUrl;
-	}
-
-	private String uploadVideo(MultipartFile file) throws IOException {
-		File fileConverted = convertMultipartToFile(file);
-		String fileName = Paths.get(file.getOriginalFilename()).getFileName().toString();
+	private String getFileUrls(MultipartFile multipartFile) throws IOException {
+		File fileConverted = convertMultipartToFile(multipartFile);
+		String fileName = new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
 		s3Client
 			.putObject(new PutObjectRequest(AmazonKeys.BUCKET_NAME, fileName, fileConverted)
 				.withCannedAcl(CannedAccessControlList.PublicRead));

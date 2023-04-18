@@ -96,7 +96,7 @@ public class UserService implements IUserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.getUserEntityByUsername(username);
-		if (userEntity != null && userEntity.isEnable() && userEntity.isEnable()) {
+		if (userEntity != null && userEntity.isEnable()) {
 			Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 			userEntity.getUserRoleEntityList().forEach(userRoleEntity -> {
 				authorities.add(new SimpleGrantedAuthority(userRoleEntity.getRole().getRoleName()));

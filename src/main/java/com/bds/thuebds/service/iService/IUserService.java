@@ -8,9 +8,8 @@ import java.util.List;
 public interface IUserService {
 	UserDTO saveNewUser(UserDTO userDTO);
 	UserDTO updateUser(UserDTO userDTO);
-
 	List<UserDTO> getUserList(Pageable pageable);
-
 	UserDTO getUserByUsername(String username);
+
 	UserDTO getUserById(Long userId);
 }

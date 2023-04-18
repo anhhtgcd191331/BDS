@@ -11,7 +11,7 @@ public interface LikePostMapper {
 	@Mapping(target = "likePostId", source = "id")
 	LikePostDTO entityToDTO(LikePostEntity likePostEntity);
 
-	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "id", source = "likePostId")
 	LikePostEntity dtoToEntity(LikePostDTO likePostDTO);
 
 	LikePostEntity updateLike(@MappingTarget LikePostEntity oldLike, LikePostEntity newLike);

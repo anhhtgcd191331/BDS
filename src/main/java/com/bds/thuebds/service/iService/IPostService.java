@@ -9,9 +9,14 @@ import java.util.List;
 
 public interface IPostService {
 	void saveNewPost(PostDTO postDTO,
-	                    List<MultipartFile> images,
-	                    MultipartFile videos) throws IOException;
+	                 List<MultipartFile> images,
+	                 List<MultipartFile> videos) throws IOException;
+
 	PostDTO updatePost(PostDTO postDTO);
+
 	List<PostDTO> getAllPost(Pageable pageable);
+
 	PostDTO getPostById(Long postId);
+
+	Integer getTotalPost();
 }

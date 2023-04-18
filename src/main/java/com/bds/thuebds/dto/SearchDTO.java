@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchDTO {
-	private String title;
+	private String postTitle;
 	private String district;
 	private Integer numberOfRooms;
 	private String apartmentType;

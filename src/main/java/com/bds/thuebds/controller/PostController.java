@@ -35,9 +35,14 @@ public class PostController {
 
 	@GetMapping("/list")
 	public List<PostDTO> listPost(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-	                              @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
+	                              @RequestParam(name = "size", required = false, defaultValue = "5") Integer size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return postService.getAllPost(pageable);
+	}
+
+	@GetMapping("/total")
+	public Integer totalPost() {
+		return postService.getTotalPost();
 	}
 
 	@GetMapping("/{postId}")
@@ -47,15 +52,17 @@ public class PostController {
 
 	@PostMapping(value = "/new", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	public HttpStatus saveNewPost(@RequestPart PostDTO postDTO,
-	                              @RequestPart(required = false, name = "images") List<MultipartFile> images,
-	                              @RequestPart(required = false, name = "video") @Valid MultipartFile video) throws IOException {
-		if (video !=null) {
-			String contentType = video.getContentType();
-			if (!contentVideos.contains(contentType)) {
-				return HttpStatus.BAD_REQUEST;
+	                              @RequestPart(required = false, name = "images") @Valid List<MultipartFile> images,
+	                              @RequestPart(required = false, name = "video") @Valid List<MultipartFile> videos) throws IOException {
+		if (videos.size() != 0) {
+			for (MultipartFile video : videos) {
+				String contentType = video.getContentType();
+				if (!contentVideos.contains(contentType)) {
+					return HttpStatus.BAD_REQUEST;
+				}
 			}
 		}
-		postService.saveNewPost(postDTO, images, video);
+		postService.saveNewPost(postDTO, images, videos);
 		return HttpStatus.OK;
 	}
 

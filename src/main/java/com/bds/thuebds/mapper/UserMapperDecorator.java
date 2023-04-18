@@ -39,7 +39,9 @@ public abstract class UserMapperDecorator implements UserMapper {
 			userRoleEntity.setRole(roleEntity);
 			userRoleEntityList.add(userRoleEntity);
 		}
-		userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		if (userDTO.getPassword() != null) {
+			userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		}
 		userEntity.setUserRoleEntityList(userRoleEntityList);
 		return userEntity;
 	}
