@@ -19,8 +19,10 @@ public class PostDTO {
 	private Double squareArea;
 	private Double price;
 	private String detailsAddress;
-	private List<Object> imageUrls;
-	private List<Object> videoUrls;
+//	private List<Object> imageUrls;
+//	private List<Object> videoUrls;
+	private List<String> imageUrls;
+	private List<String> videoUrls;
 	private boolean isSold;
 	private String typeOfApartment;
 	private Long authorId;

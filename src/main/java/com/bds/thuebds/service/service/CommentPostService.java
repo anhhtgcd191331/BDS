@@ -49,7 +49,7 @@ public class CommentPostService implements ICommentPostService {
 		NotificationEntity notification = new NotificationEntity();
 		notification.setSenderId(commentary.getId());
 		notification.setReceiverId(authorOfPost.getId());
-		notification.setNotificationContent(commentary.getFullName()+" has commented your post "+postEntity.getPostTitle());
+		notification.setNotificationContent("<b>" + commentary.getFullName() + "</b> has commented your post <b>" + postEntity.getPostTitle() + "</b>");
 		notificationRepository.save(notification);
 
 		return commentPostMapper.entityToDTO(
