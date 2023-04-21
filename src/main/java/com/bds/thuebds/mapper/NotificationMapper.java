@@ -15,7 +15,7 @@ public interface NotificationMapper {
 	NotificationDTO entityToDto(NotificationEntity notificationEntity);
 
 	@Mappings(
-			@Mapping(target = "notificationId", source = "id")
+			@Mapping(target = "id", source = "notificationId")
 	)
 	NotificationEntity dtoToEntity(NotificationDTO notificationDTO);
 
