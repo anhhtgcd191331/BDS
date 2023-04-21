@@ -75,8 +75,10 @@ public class UserService implements IUserService, UserDetailsService {
 	}
 
 	@Override
-	public UserDTO getUserByUsername(String username) {
-		return userMapper.entityToDto(userRepository.getUserEntityByUsername(username));
+	public List<UserDTO> getUsersByUsername(String username) {
+		return userRepository.getUserEntitiesByUsernameContains(username)
+				.stream().map(userEntity -> userMapper.entityToDto(userEntity))
+				.collect(Collectors.toList());
 	}
 
 	@Override

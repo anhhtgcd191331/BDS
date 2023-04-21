@@ -35,9 +35,9 @@ public class UserController {
 		return userService.getUserList(pageable);
 	}
 
-	@GetMapping("/find/{username}")
-	public UserDTO getUserByUsername(@PathVariable(name = "username") String username) {
-		return userService.getUserByUsername(username);
+	@GetMapping("/find")
+	public List<UserDTO> getUserByUsername(@RequestParam(name = "username") String username) {
+		return userService.getUsersByUsername(username);
 	}
 
 	@PutMapping("/update")

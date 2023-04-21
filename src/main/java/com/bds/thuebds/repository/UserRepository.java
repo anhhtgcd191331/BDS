@@ -13,12 +13,14 @@ import java.util.List;
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    @Query(value = "SELECT * FROM appuser " +
-            " WHERE id =:userId", nativeQuery = true)
-    UserEntity getUserEntityByUserId(@Param("userId") Long userId);
+	@Query(value = "SELECT * FROM appuser " +
+			" WHERE id =:userId", nativeQuery = true)
+	UserEntity getUserEntityByUserId(@Param("userId") Long userId);
 
 	@Query(value = "SELECT * FROM appuser", nativeQuery = true)
 	List<UserEntity> getUserList(Pageable pageable);
 
 	UserEntity getUserEntityByUsername(String username);
+
+	List<UserEntity> getUserEntitiesByUsernameContains(String username);
 }
