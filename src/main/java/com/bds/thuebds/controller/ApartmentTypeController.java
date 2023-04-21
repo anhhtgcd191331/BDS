@@ -28,7 +28,7 @@ public class ApartmentTypeController {
         return service.newApartmentType(apartmentTypeDTO);
     }
 
-    @PostMapping("update")
+    @PutMapping("update")
     ApartmentTypeDTO updateApartmentType(@RequestBody ApartmentTypeDTO apartmentTypeDTO) {
         return service.updateApartmentType(apartmentTypeDTO);
     }

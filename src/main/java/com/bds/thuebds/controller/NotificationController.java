@@ -3,10 +3,7 @@ package com.bds.thuebds.controller;
 import com.bds.thuebds.dto.NotificationDTO;
 import com.bds.thuebds.service.iService.INotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,9 @@ public class NotificationController {
     @GetMapping("/receiver")
     List<NotificationDTO> getAllNotificationByReceiverId(@RequestParam(name = "receiverId") Long receiverId) {
         return notificationService.getNotificationByReceiverId(receiverId);
+    }
+    @PutMapping("/update")
+    NotificationDTO updateNotification(@RequestBody NotificationDTO notificationDTO) {
+        return notificationService.updateNotification(notificationDTO);
     }
 }

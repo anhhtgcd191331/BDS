@@ -1,6 +1,7 @@
 package com.bds.thuebds.service.service;
 
 import com.bds.thuebds.dto.NotificationDTO;
+import com.bds.thuebds.entity.NotificationEntity;
 import com.bds.thuebds.mapper.NotificationMapper;
 import com.bds.thuebds.repository.NotificationRepository;
 import com.bds.thuebds.service.iService.INotificationService;
@@ -38,5 +39,13 @@ public class NotificationService implements INotificationService {
 				.findAll().stream()
 				.map(notificationEntity -> mapper.entityToDto(notificationEntity))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public NotificationDTO updateNotification(NotificationDTO notificationDTO) {
+		NotificationEntity oldNotify = notificationRepository.getById(notificationDTO.getNotificationId());
+		return mapper.entityToDto(
+				mapper.updateNotification(oldNotify, mapper.dtoToEntity(notificationDTO))
+		);
 	}
 }

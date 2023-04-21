@@ -8,4 +8,6 @@ public interface INotificationService {
 	List<NotificationDTO> getNotificationByReceiverId(Long receiverId);
 
 	List<NotificationDTO> getAllNotification();
+
+	NotificationDTO updateNotification(NotificationDTO notificationDTO);
 }
