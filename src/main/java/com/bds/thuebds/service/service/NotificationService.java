@@ -31,4 +31,12 @@ public class NotificationService implements INotificationService {
 			.sorted(Comparator.comparing(NotificationDTO::getNotificationId).reversed())
 			.collect(Collectors.toList());
 	}
+
+	@Override
+	public List<NotificationDTO> getAllNotification() {
+		return notificationRepository
+				.findAll().stream()
+				.map(notificationEntity -> mapper.entityToDto(notificationEntity))
+				.collect(Collectors.toList());
+	}
 }

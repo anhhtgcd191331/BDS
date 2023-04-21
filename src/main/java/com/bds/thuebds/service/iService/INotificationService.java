@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface INotificationService {
 	List<NotificationDTO> getNotificationByReceiverId(Long receiverId);
+
+	List<NotificationDTO> getAllNotification();
 }

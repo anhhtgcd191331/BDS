@@ -11,11 +11,13 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "notification")
-public class NotificationEntity extends BaseEntity{
+public class NotificationEntity extends BaseEntity {
 	@Column(name = "sender_id")
 	private Long senderId;
 	@Column(name = "receiver_id")
 	private Long receiverId;
+	@Column(name = "post_id")
+	private Long postId;
 	@Column(name = "notification_content")
 	private String notificationContent;
 	@Column(name = "is_read")

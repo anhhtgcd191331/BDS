@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class TypeOfApartmentService implements ITypeOfApartmentService {
     @Autowired
     ApartmentTypeMapper mapper;

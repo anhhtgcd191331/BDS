@@ -5,7 +5,7 @@ import com.bds.thuebds.entity.ApartmentTypeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "string")
+@Mapper(componentModel = "spring")
 public interface ApartmentTypeMapper {
     ApartmentTypeDTO entityToDto(ApartmentTypeEntity entity);
 

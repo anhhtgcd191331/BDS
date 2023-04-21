@@ -48,7 +48,8 @@ public class LikePostService implements ILikePostService {
 		notification.setSenderId(likePostDTO.getUserId());
 		notification.setReceiverId(postEntity.getAuthorId());
 		UserEntity user = userRepository.getUserEntityByUserId(likePostDTO.getUserId());
-		notification.setNotificationContent(user.getFullName()+" has like your post "+postEntity.getPostTitle());
+		notification.setNotificationContent(user.getFullName() + " has like your post " + postEntity.getPostTitle());
+		notification.setPostId(likePostDTO.getPostId());
 		notificationRepository.save(notification);
 
 		return likePostMapper.entityToDTO(likePostRepository.save(likePostMapper.dtoToEntity(likePostDTO)));
