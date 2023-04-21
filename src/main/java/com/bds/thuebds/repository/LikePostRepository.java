@@ -11,4 +11,6 @@ import java.util.List;
 @Transactional
 public interface LikePostRepository extends JpaRepository<LikePostEntity, Long> {
 	List<LikePostEntity> getLikePostEntitiesByPostId(Long postId);
+
+	List<LikePostEntity> getLikePostEntitiesByUserId(Long userId);
 }

@@ -67,4 +67,12 @@ public class LikePostService implements ILikePostService {
 			.map(likePostEntity -> likePostMapper.entityToDTO(likePostEntity))
 			.collect(Collectors.toList());
 	}
+
+	@Override
+	public List<LikePostDTO> getAllLikeByUserId(Long userId) {
+		return likePostRepository.getLikePostEntitiesByUserId(userId)
+				.stream()
+				.map(likePostEntity -> likePostMapper.entityToDTO(likePostEntity))
+				.collect(Collectors.toList());
+	}
 }
