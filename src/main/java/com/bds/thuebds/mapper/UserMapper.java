@@ -12,8 +12,9 @@ import org.mapstruct.Mappings;
 @DecoratedWith(UserMapperDecorator.class)
 public interface UserMapper {
 	@Mappings({
-		@Mapping(target = "roleList", ignore = true),
-			@Mapping(target = "userId", source = "id")
+			@Mapping(target = "roleList", ignore = true),
+			@Mapping(target = "userId", source = "id"),
+			@Mapping(target = "password", ignore = true)
 	})
 	UserDTO entityToDto(UserEntity userEntity);
 
@@ -24,9 +25,10 @@ public interface UserMapper {
 	UserEntity dtoToEntity(UserDTO userDTO);
 
 	@Mappings({
-		@Mapping(target = "id", ignore = true),
-		@Mapping(target = "username", ignore = true),
-		@Mapping(target = "email", ignore = true)
+			@Mapping(target = "id", ignore = true),
+			@Mapping(target = "username", ignore = true),
+			@Mapping(target = "email", ignore = true),
+			@Mapping(target = "password", ignore = true)
 	})
 	UserEntity updateUserEntity(@MappingTarget UserEntity oldUser, UserEntity newUser);
 }
