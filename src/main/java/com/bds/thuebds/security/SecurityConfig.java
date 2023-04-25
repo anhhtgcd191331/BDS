@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/v1/post/list/**").permitAll()
 			.antMatchers("/api/v1/post/{postId}/**").permitAll()
 				.antMatchers("/api/v1/comment/**").permitAll()
+				.antMatchers("/api/v1/user/new/**").permitAll()
 				.antMatchers("/api/v1/search/filters").permitAll()
 			.antMatchers("/**").hasAnyAuthority("admin", "mod", "guest", "member")
 			.anyRequest().authenticated().and().cors().configurationSource(request -> corsConfiguration);

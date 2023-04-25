@@ -12,6 +12,7 @@ import org.mapstruct.MappingTarget;
 public interface PostMapper {
 	@Mapping(target = "postId", source = "id")
 	PostDTO entityToDto(PostEntity postEntity);
+
 	PostEntity dtoToEntity(PostDTO postDTO);
 
 	@Mapping(target = "id", ignore = true)

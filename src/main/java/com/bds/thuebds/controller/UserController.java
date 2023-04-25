@@ -40,6 +40,11 @@ public class UserController {
 		return userService.getUsersByUsername(username);
 	}
 
+//	@GetMapping("/find/{username}")
+//	public List<UserDTO> getUserByUsername(@PathVariable(name = "username") String username) {
+//		return userService.getUsersByUsername(username);
+//	}
+
 	@PutMapping("/update")
 	public UserDTO updateUser(@RequestBody UserDTO userDTO) {
 		return userService.updateUser(userDTO);
