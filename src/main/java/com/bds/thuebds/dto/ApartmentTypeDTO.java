@@ -14,5 +14,4 @@ import java.util.List;
 public class ApartmentTypeDTO {
 	private Long id;
 	private String typeOfApartment;
-	private List<PostDTO> postDTOList;
 }
