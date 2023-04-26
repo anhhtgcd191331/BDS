@@ -114,4 +114,8 @@ public class UserService implements IUserService, UserDetailsService {
 			throw new RuntimeException();
 		}
 	}
+	@Override
+	public Long countTotalUser() {
+		return userRepository.count();
+	}
 }

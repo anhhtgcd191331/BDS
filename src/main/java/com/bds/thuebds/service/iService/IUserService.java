@@ -10,6 +10,6 @@ public interface IUserService {
 	UserDTO updateUser(UserDTO userDTO);
 	List<UserDTO> getUserList(Pageable pageable);
 	List<UserDTO> getUsersByUsername(String username);
-
 	UserDTO getUserById(Long userId);
+	Long countTotalUser();
 }

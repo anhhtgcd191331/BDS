@@ -54,4 +54,9 @@ public class UserController {
 	public UserDTO getUserById(@PathVariable(name = "userId") Long userId) {
 		return userService.getUserById(userId);
 	}
+
+	@GetMapping("/total")
+	public Long totalUser(){
+		return userService.countTotalUser();
+	}
 }
