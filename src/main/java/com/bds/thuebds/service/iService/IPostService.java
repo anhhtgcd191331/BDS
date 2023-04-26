@@ -16,6 +16,8 @@ public interface IPostService {
 
 	List<PostDTO> getAllPost(Pageable pageable);
 
+	List<PostDTO> getPostByAuthorId(Pageable pageable, Long authorId);
+
 	PostDTO getPostById(Long postId);
 
 	Integer getTotalPost();

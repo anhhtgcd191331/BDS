@@ -71,4 +71,12 @@ public class PostController {
 		return postService.updatePost(postDTO);
 	}
 
+	@GetMapping("/list/{userId}")
+	public List<PostDTO> listPosByUser(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+								  @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+									   @PathVariable(name = "userId") Long userId  ) {
+		Pageable pageable = PageRequest.of(page, size);
+		return postService.getPostByAuthorId(pageable, userId);
+	}
+
 }

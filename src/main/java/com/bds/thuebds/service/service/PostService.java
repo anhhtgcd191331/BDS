@@ -87,6 +87,16 @@ public class PostService implements IPostService {
 	}
 
 	@Override
+	public List<PostDTO> getPostByAuthorId(Pageable pageable, Long authorId) {
+		return postRepository.getPostEntitiesByAndAuthorId(pageable, authorId)
+				.stream()
+				.map(postEntity -> postMapper.entityToDto(postEntity))
+				.filter(postDTO -> !postDTO.isDeleted())
+				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
+				.collect(Collectors.toList());
+	}
+
+	@Override
 	public PostDTO getPostById(Long postId) {
 		return postMapper.entityToDto(postRepository.findById(postId).orElseThrow(EntityNotFoundException::new));
 	}
