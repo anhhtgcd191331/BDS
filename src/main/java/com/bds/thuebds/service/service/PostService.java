@@ -64,6 +64,7 @@ public class PostService implements IPostService {
 			}
 			postEntity.setVideoUrls(videoUrls);
 		}
+		postEntity.setTotalLike(0);
 		postRepository.save(postEntity);
 	}
 

@@ -44,7 +44,7 @@ public class UserService implements IUserService, UserDetailsService {
 	@Override
 	public UserDTO saveNewUser(UserDTO userDTO) throws UserDuplicatedUserNameException {
 		if (checkDuplicatedUserByUserNameForSaveNew(userDTO).equalsIgnoreCase("OK")
-			&& userDTO.getUserId() == null) {
+				&& userDTO.getUserId() == null) {
 			UserEntity userEntity = userRepository.save(userMapper.dtoToEntity(userDTO));
 			userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 			userRoleRepository.saveAll(userEntity.getUserRoleEntityList());
@@ -62,6 +62,16 @@ public class UserService implements IUserService, UserDetailsService {
 		for (UserRoleEntity userRoleEntity : userRoleRepository.getUserRoleEntitiesByUserId(oldUser.getId())) {
 			userRoleRepository.deleteUserRoleEntityById(userRoleEntity.getId());
 		}
+		if (newUser.getPassword() != null) {
+			if (!passwordEncoder.matches(newUser.getPassword(), oldUser.getPassword())
+					&& newUser.getPassword() != null
+					&& !newUser.getPassword().equalsIgnoreCase("")) {
+				updatedUser.setPassword(newUser.getPassword());
+			} else {
+				updatedUser.setPassword(oldUser.getPassword());
+			}
+		}
+
 		userRoleRepository.saveAll(updatedUser.getUserRoleEntityList());
 		return userMapper.entityToDto(updatedUser);
 	}
@@ -69,9 +79,9 @@ public class UserService implements IUserService, UserDetailsService {
 	@Override
 	public List<UserDTO> getUserList(Pageable pageable) {
 		return userRepository.getUserList(pageable)
-			.stream()
-			.map(userEntity -> userMapper.entityToDto(userEntity))
-			.collect(Collectors.toList());
+				.stream()
+				.map(userEntity -> userMapper.entityToDto(userEntity))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -84,6 +94,11 @@ public class UserService implements IUserService, UserDetailsService {
 	@Override
 	public UserDTO getUserById(Long userId) {
 		return userMapper.entityToDto(userRepository.getUserEntityByUserId(userId));
+	}
+
+	@Override
+	public Long countTotalUser() {
+		return userRepository.count();
 	}
 
 	private String checkDuplicatedUserByUserNameForSaveNew(UserDTO userDTO) {
@@ -113,9 +128,5 @@ public class UserService implements IUserService, UserDetailsService {
 		} else {
 			throw new RuntimeException();
 		}
-	}
-	@Override
-	public Long countTotalUser() {
-		return userRepository.count();
 	}
 }
