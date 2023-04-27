@@ -16,13 +16,13 @@ public class ChatController {
     @Autowired
     IChatService service;
 
-    @GetMapping("/receiver")
-    public List<ChatDTO> getChatByReceiverId(@RequestParam(name = "receiverId") Long receiverId) {
-        return service.getChatByReceiverId(receiverId);
+    @GetMapping("/get")
+    public List<ChatDTO> getChatByChatId(@RequestParam(name = "chatId") Long receiverId) {
+        return service.getChatEntitiesByChatId(receiverId);
     }
 
     @GetMapping("/sender")
     public List<ChatDTO> getChatBySenderId(@RequestParam(name = "senderId") Long senderId) {
-        return service.getChatBySenderId(senderId);
+        return service.getChatEntitiesBySenderId(senderId);
     }
 }

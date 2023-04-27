@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
-    List<ChatEntity> getChatEntitiesByChatSenderId(Long senderId);
-
-    List<ChatEntity> getChatEntitiesByChatReceiverId(Long receiverId);
+    List<ChatEntity> getChatEntitiesByChatId(Long chatId);
+    List<ChatEntity> getChatEntitiesBySenderId(Long senderId);
 }

@@ -19,16 +19,17 @@ public class ChatService implements IChatService {
     ChatMapper mapper;
 
     @Override
-    public List<ChatDTO> getChatByReceiverId(Long receiverId) {
-        return repository.getChatEntitiesByChatReceiverId(receiverId)
+    public List<ChatDTO> getChatEntitiesByChatId(Long chatId) {
+        return repository.getChatEntitiesByChatId(chatId)
+                .stream()
+                .map(chatEntity -> mapper.entityToDto(chatEntity))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<ChatDTO> getChatEntitiesBySenderId(Long senderId) {
+        return repository.getChatEntitiesBySenderId(senderId)
                 .stream().map(chatEntity -> mapper.entityToDto(chatEntity))
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<ChatDTO> getChatBySenderId(Long senderId) {
-        return repository.getChatEntitiesByChatSenderId(senderId)
-                .stream().map(chatEntity -> mapper.entityToDto(chatEntity))
-                .collect(Collectors.toList());
-    }
 }
