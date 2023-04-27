@@ -14,16 +14,11 @@ import java.time.ZonedDateTime;
 @Setter
 @Entity
 @Table(name = "chat")
-public class ChatEntity {
-	@Id
-	private Long id;
-	private String content;
-	@Column(name = "createddate")
-	private ZonedDateTime createdDate;
-	@Column(name = "lasted_modified_date")
-	private ZonedDateTime lastedModifiedDate;
-	@Column(name = "chat_id")
-	private Long chatId;
-	@Column(name = "sender_id")
-	private Long senderId;
+public class ChatEntity extends BaseEntity{
+
+	@Column(name = "chat_receiver_id")
+	private Long chatReceiverId;
+
+	@Column(name = "chat_sender_id")
+	private Long chatSenderId;
 }
