@@ -12,7 +12,9 @@ public interface IPostService {
 	                 List<MultipartFile> images,
 	                 List<MultipartFile> videos) throws IOException;
 
-	PostDTO updatePost(PostDTO postDTO);
+	PostDTO updatePost(PostDTO postDTO,
+					   List<MultipartFile> images,
+					   List<MultipartFile> videos) throws IOException;
 
 	List<PostDTO> getAllPost(Pageable pageable);
 

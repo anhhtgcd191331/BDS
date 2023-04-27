@@ -66,9 +66,11 @@ public class PostController {
 		return HttpStatus.OK;
 	}
 
-	@PutMapping("/update")
-	public PostDTO updatePost(@RequestBody PostDTO postDTO) {
-		return postService.updatePost(postDTO);
+	@PutMapping(value = "/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+	public PostDTO updatePost(@RequestPart PostDTO postDTO,
+							  @RequestPart(required = false, name = "images") @Valid List<MultipartFile> images,
+							  @RequestPart(required = false, name = "video") @Valid List<MultipartFile> videos) throws IOException {
+		return postService.updatePost(postDTO,images, videos);
 	}
 
 	@GetMapping("/list/{userId}")

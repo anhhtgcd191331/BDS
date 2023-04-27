@@ -68,8 +68,22 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public PostDTO updatePost(PostDTO postDTO) {
+	public PostDTO updatePost(PostDTO postDTO, List<MultipartFile> images, List<MultipartFile> videos) throws IOException {
 		PostEntity oldPost = postRepository.findById(postDTO.getPostId()).orElseThrow(EntityNotFoundException::new);
+		if (images.size() != 0) {
+			List<String> imageUrls = new ArrayList<>();
+			for (MultipartFile multipartFile : images) {
+				imageUrls.add(getFileUrls(multipartFile));
+			}
+			postDTO.setImageUrls(imageUrls);
+		}
+		if (videos.size() != 0) {
+			List<String> videoUrls = new ArrayList<>();
+			for (MultipartFile multipartFile : videos) {
+				videoUrls.add(getFileUrls(multipartFile));
+			}
+			postDTO.setVideoUrls(videoUrls);
+		}
 		return postMapper.entityToDto(
 			postRepository.save(
 				postMapper.updatePost(oldPost, postMapper.dtoToEntity(postDTO))
