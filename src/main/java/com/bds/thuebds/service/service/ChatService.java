@@ -5,6 +5,10 @@ import com.bds.thuebds.dto.ChatMessageDTO;
 import com.bds.thuebds.dto.IChatDetails;
 import com.bds.thuebds.entity.ChatEntity;
 import com.bds.thuebds.repository.ChatRepository;
+
+import com.bds.thuebds.dto.ChatDTO;
+import com.bds.thuebds.mapper.ChatMapper;
+
 import com.bds.thuebds.repository.UserRepository;
 import com.bds.thuebds.service.iService.IChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,6 @@ import java.util.List;
 
 @Service
 public class ChatService implements IChatService {
-
     @Autowired
     ChatRepository repository;
 
