@@ -17,7 +17,6 @@ public interface IPostService {
 					   List<MultipartFile> videos) throws IOException;
 
 	List<PostDTO> getAllPost(Pageable pageable);
-
 	List<PostDTO> getPostByAuthorId(Pageable pageable, Long authorId);
 
 	PostDTO getPostById(Long postId);

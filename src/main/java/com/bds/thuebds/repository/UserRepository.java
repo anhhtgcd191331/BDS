@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Query(value = "SELECT * FROM appuser " +
-			" WHERE id =:userId", nativeQuery = true)
+		" WHERE id =:userId", nativeQuery = true)
 	UserEntity getUserEntityByUserId(@Param("userId") Long userId);
 
 	@Query(value = "SELECT * FROM appuser", nativeQuery = true)

@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,4 +12,5 @@ import java.util.List;
 public class ApartmentTypeDTO {
 	private Long id;
 	private String typeOfApartment;
+
 }

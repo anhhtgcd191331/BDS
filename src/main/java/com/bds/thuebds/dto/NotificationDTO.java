@@ -11,6 +11,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationDTO {
 	private Long notificationId;
+	private Long postId;
 	private Long senderId;
 	private Long receiverId;
 	private String notificationContent;

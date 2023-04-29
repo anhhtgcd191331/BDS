@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Getter
@@ -13,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatDetailsDTO {
-    private LinkedHashSet<Long> chatId;
+    private Long chatId;
     private String receiverName;
+    private String senderName;
     private List<ChatMessageDTO> messages;
 }

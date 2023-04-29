@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-
 @Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -50,25 +49,25 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request,
-											HttpServletResponse response,
-											FilterChain chain,
-											Authentication authentication) throws IOException {
+	                                        HttpServletResponse response,
+	                                        FilterChain chain,
+	                                        Authentication authentication) throws IOException {
 		User user = (User) authentication.getPrincipal();
 		UserEntity userEntity = userRepository.getUserEntityByUsername(user.getUsername());
 		Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 		String access_token = JWT.create()
-				.withClaim("username", user.getUsername())
-				.withClaim("userId", userEntity.getId())
-				.withClaim("fullName", userEntity.getFullName())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 5 * 60 * 1000000))
-				.withIssuer(request.getRequestURL().toString())
-				.withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.sign(algorithm);
+			.withClaim("username", user.getUsername())
+			.withClaim("userId", userEntity.getId())
+			.withClaim("fullName", userEntity.getFullName())
+			.withExpiresAt(new Date(System.currentTimeMillis() + 5 * 60 * 1000000))
+			.withIssuer(request.getRequestURL().toString())
+			.withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+			.sign(algorithm);
 		String refresh_token = JWT.create()
-				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
-				.withIssuer(request.getRequestURL().toString())
-				.sign(algorithm);
+			.withSubject(user.getUsername())
+			.withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
+			.withIssuer(request.getRequestURL().toString())
+			.sign(algorithm);
 
 		Map<String, String> tokens = new HashMap<>();
 		tokens.put("access_token", access_token);
@@ -79,4 +78,3 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 	}
 }
-

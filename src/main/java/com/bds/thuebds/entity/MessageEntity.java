@@ -1,6 +1,5 @@
 package com.bds.thuebds.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +12,7 @@ import java.sql.Time;
 @Setter
 @Entity
 @Table(name = "chat_message")
+
 public class MessageEntity extends BaseEntity{
     @Column(name = "sender_id")
     private Long senderId;

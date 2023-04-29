@@ -20,7 +20,7 @@ public interface UserMapper {
 
 	@Mappings({
 		@Mapping(target = "userRoleEntityList", ignore = true),
-		@Mapping(target = "id", source = "userId")
+		@Mapping(target = "id", ignore = true)
 	})
 	UserEntity dtoToEntity(UserDTO userDTO);
 

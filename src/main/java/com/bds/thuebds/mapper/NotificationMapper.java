@@ -9,16 +9,17 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
+
 	@Mappings(
-			@Mapping(target = "notificationId", source = "id")
+		@Mapping(target = "notificationId", source = "id")
 	)
 	NotificationDTO entityToDto(NotificationEntity notificationEntity);
 
 	@Mappings(
-			@Mapping(target = "id", source = "notificationId")
+		@Mapping(target = "id", source = "notificationId")
 	)
 	NotificationEntity dtoToEntity(NotificationDTO notificationDTO);
 
 	NotificationEntity updateNotification(@MappingTarget NotificationEntity oldNotification,
-										  NotificationEntity newNotification);
+	                                      NotificationEntity newNotification);
 }

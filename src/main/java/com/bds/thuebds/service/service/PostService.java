@@ -22,11 +22,7 @@ import javax.persistence.EntityNotFoundException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,16 +98,6 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<PostDTO> getPostByAuthorId(Pageable pageable, Long authorId) {
-		return postRepository.getPostEntitiesByAndAuthorId(pageable, authorId)
-				.stream()
-				.map(postEntity -> postMapper.entityToDto(postEntity))
-				.filter(postDTO -> !postDTO.isDeleted())
-				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
-				.collect(Collectors.toList());
-	}
-
-	@Override
 	public PostDTO getPostById(Long postId) {
 		return postMapper.entityToDto(postRepository.findById(postId).orElseThrow(EntityNotFoundException::new));
 	}
@@ -136,5 +122,14 @@ public class PostService implements IPostService {
 			.putObject(new PutObjectRequest(AmazonKeys.BUCKET_NAME, fileName, fileConverted)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		return AmazonKeys.END_POINT_URL + "/" + AmazonKeys.BUCKET_NAME + "/" + fileName;
+	}
+	@Override
+	public List<PostDTO> getPostByAuthorId(Pageable pageable, Long authorId) {
+		return postRepository.getPostEntitiesByAndAuthorId(pageable, authorId)
+				.stream()
+				.map(postEntity -> postMapper.entityToDto(postEntity))
+				.filter(postDTO -> !postDTO.isDeleted())
+				.sorted(Comparator.comparing(PostDTO::getTotalLike).reversed())
+				.collect(Collectors.toList());
 	}
 }

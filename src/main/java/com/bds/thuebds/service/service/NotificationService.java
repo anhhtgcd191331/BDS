@@ -36,16 +36,16 @@ public class NotificationService implements INotificationService {
 	@Override
 	public List<NotificationDTO> getAllNotification() {
 		return notificationRepository
-				.findAll().stream()
-				.map(notificationEntity -> mapper.entityToDto(notificationEntity))
-				.collect(Collectors.toList());
+			.findAll().stream()
+			.map(notificationEntity -> mapper.entityToDto(notificationEntity))
+			.collect(Collectors.toList());
 	}
 
 	@Override
 	public NotificationDTO updateNotification(NotificationDTO notificationDTO) {
 		NotificationEntity oldNotify = notificationRepository.getById(notificationDTO.getNotificationId());
 		return mapper.entityToDto(
-				mapper.updateNotification(oldNotify, mapper.dtoToEntity(notificationDTO))
+			mapper.updateNotification(oldNotify, mapper.dtoToEntity(notificationDTO))
 		);
 	}
 }

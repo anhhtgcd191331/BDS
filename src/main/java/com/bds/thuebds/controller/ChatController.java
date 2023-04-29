@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/chat")
 public class ChatController {
+
     @Autowired
     IChatService service;
 
@@ -19,12 +20,20 @@ public class ChatController {
                                       @RequestParam(name = "receiverId") Long receiverId) {
         return service.newRoomChat(senderId, receiverId);
     }
+
+    @GetMapping("/get")
+    public ChatDetailsDTO getChatByChatId(@RequestParam(name = "chatId") Long chatId) {
+        return service.getChatListByChatId(chatId);
+    }
+
     @GetMapping("/sender")
     public List<ChatDetailsDTO> getChatBySenderId(@RequestParam(name = "senderId") Long senderId) {
         return service.getChatListBySenderId(senderId);
     }
+
     @GetMapping("/receiver")
     public List<ChatDetailsDTO> getChatByReceiverId(@RequestParam(name = "receiverId") Long receiverId) {
         return service.getChatListByReceiverId(receiverId);
     }
+
 }

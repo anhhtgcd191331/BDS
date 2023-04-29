@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -15,6 +13,7 @@ import java.time.ZonedDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ChatMessageDTO {
     private Long receiverId;
+    private String receiverName;
     private Long senderId;
     private String content;
     private Timestamp createdDate;

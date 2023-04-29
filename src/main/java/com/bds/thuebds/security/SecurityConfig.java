@@ -61,10 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/v3/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
 			.antMatchers("/api/v1/post/list/**").permitAll()
 			.antMatchers("/api/v1/post/{postId}/**").permitAll()
-				.antMatchers("/api/v1/comment/**").permitAll()
-				.antMatchers("/api/v1/user/new/**").permitAll()
-				.antMatchers("/api/v1/search/filters").permitAll()
+			.antMatchers("/api/v1/comment/**").permitAll()
+			.antMatchers("/api/v1/user/new/**").permitAll()
+			.antMatchers("/api/v1/search/filters").permitAll()
 			.antMatchers("/**").hasAnyAuthority("admin", "mod", "guest", "member")
+
 			.anyRequest().authenticated().and().cors().configurationSource(request -> corsConfiguration);
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

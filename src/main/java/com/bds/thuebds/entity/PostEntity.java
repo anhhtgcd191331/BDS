@@ -30,6 +30,9 @@ public class PostEntity extends BaseEntity {
 	@Column(name = "author_id")
 	private Long authorId;
 
+	@Column(name = "chat_id")
+	private Long chatId;
+
 	@Column(name = "description")
 	@NotNull
 	private String description;
