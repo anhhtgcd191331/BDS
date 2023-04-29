@@ -11,20 +11,47 @@ import java.util.List;
 
 @Repository
 public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
-    @Query(value = " SELECT * FROM chat_message " +
-            " INNER JOIN chat_message.id = chat.id " +
-            " GROUP BY chat_message.id" +
-            " WHERE chat_id =:chatId ", nativeQuery = true)
+    @Query(value = "SELECT cm.id,\n" +
+            "       chat_id          AS chatId,\n" +
+            "       sender_id        AS senderId,\n" +
+            "       content,\n" +
+            "       chat_receiver_id AS chatReceiverId,\n" +
+            "       cm.createddate AS createdDate\n" +
+            "FROM chat\n" +
+            "         INNER JOIN\n" +
+            "     chat_message cm\n" +
+            "     on chat.id = cm.chat_id\n" +
+            "WHERE chat_id =:chatId\n" +
+            "GROUP BY chat_id, sender_id, content, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
     List<IChatDetails> getMessageListByChatId(@Param("chatId") Long chatId);
-    @Query(value = " SELECT * FROM chat_message " +
-            " INNER JOIN chat_message.id = chat.id " +
-            " GROUP BY chat_message.id" +
-            " WHERE chat_message.sender_id =:senderId ", nativeQuery = true)
+
+    @Query(value = "SELECT cm.id,\n" +
+            "       chat_id          AS chatId,\n" +
+            "       sender_id        AS senderId,\n" +
+            "       content,\n" +
+            "       chat_receiver_id AS chatReceiverId,\n" +
+            "       cm.createddate AS createdDate\n" +
+            "FROM chat\n" +
+            "         INNER JOIN\n" +
+            "     chat_message cm\n" +
+            "     on chat.id = cm.chat_id\n" +
+            "WHERE chat_sender_id =:senderId\n" +
+            "GROUP BY chat_id, sender_id, content, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
     List<IChatDetails> getMessageListBySenderId(@Param("senderId") Long senderId);
 
-    @Query(value = " SELECT * FROM chat_message " +
-            " INNER JOIN chat_message.id = chat.id " +
-            " GROUP BY chat_message.id" +
-            " WHERE chat.chat_receiver_id =:receiverId ", nativeQuery = true)
+    @Query(value = "SELECT cm.id,\n" +
+            "       chat_id          AS chatId,\n" +
+            "       sender_id        AS senderId,\n" +
+            "       content,\n" +
+            "       chat_receiver_id AS chatReceiverId,\n" +
+            "       cm.createddate AS createdDate\n" +
+            "FROM chat\n" +
+            "         INNER JOIN\n" +
+            "     chat_message cm\n" +
+            "     on chat.id = cm.chat_id\n" +
+            "WHERE chat_receiver_id =:receiverId\n" +
+            "GROUP BY chat_id, sender_id, content, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
     List<IChatDetails> getMessageListByReceiverId(@Param("receiverId") Long receiverId);
+
+    ChatEntity getChatEntityByChatReceiverIdAndChatSenderId(Long chatReceiverId, Long chatSenderId);
 }

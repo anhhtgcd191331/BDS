@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -16,7 +17,6 @@ public class ChatMessageDTO {
     private Long receiverId;
     private Long senderId;
     private String content;
-    private Time createdAt;
-    private Time updatedAt;
+    private Timestamp createdDate;
     private Long chatId;
 }
