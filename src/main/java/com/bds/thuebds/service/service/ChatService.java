@@ -28,9 +28,8 @@ public class ChatService implements IChatService {
 
     @Override
     public List<ChatDetailsDTO> getChatListBySenderId(Long senderId) {
-        ChatDetailsDTO chatDetailsDTO = new ChatDetailsDTO();
         List<ChatDetailsDTO> chatDetailsList = new ArrayList<>();
-        List<ChatMessageDTO> chatDTOList = new ArrayList<>();
+        List<ChatDetailsDTO> chatDetailsDTOReturns = new ArrayList<>();
 //        query big list
         List<IChatDetails> iChatDetailsList = repository.getMessageListBySenderId(senderId);
 //        get chat id unique list
@@ -38,10 +37,17 @@ public class ChatService implements IChatService {
         for (IChatDetails iChatDetails : iChatDetailsList) {
             chatIdUniqueList.add(iChatDetails.getChatId());
         }
-//        create list chat details list
+//        create list chat details list with id info only
         for (Long i : chatIdUniqueList) {
-            List<IChatDetails> msgBySenderIdAndChatId = repository.getMessageListBySenderIdAndChatId(senderId, i);
-            chatDetailsDTO.setChatId(i);
+            ChatDetailsDTO chatDetailsTempDTO = new ChatDetailsDTO();
+            chatDetailsTempDTO.setChatId(i);
+            chatDetailsList.add(chatDetailsTempDTO);
+        }
+        for (ChatDetailsDTO chatDetails : chatDetailsList) {
+            ChatDetailsDTO chatDetailsDTOReturn = new ChatDetailsDTO();
+            List<ChatMessageDTO> chatDTOList = new ArrayList<>();
+//        alter msg list object to chat details list
+            List<IChatDetails> msgBySenderIdAndChatId = repository.getMessageListBySenderIdAndChatId(senderId, chatDetails.getChatId());
 //            each item in chat details list has list of msg
             for (IChatDetails iChatDetails : msgBySenderIdAndChatId) {
                 ChatMessageDTO chatDTO = new ChatMessageDTO();
@@ -54,43 +60,54 @@ public class ChatService implements IChatService {
                 chatDTO.setCreatedDate(iChatDetails.getCreatedDate());
                 chatDTOList.add(chatDTO);
             }
-            chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(senderId).getFullName());
-            chatDetailsDTO.setMessages(chatDTOList);
-            chatDetailsList.add(chatDetailsDTO);
+            chatDetailsDTOReturn.setChatId(chatDetails.getChatId());
+            chatDetailsDTOReturn.setReceiverName(userRepository.getUserEntityByUserId(senderId).getFullName());
+            chatDetailsDTOReturn.setMessages(chatDTOList);
+            chatDetailsDTOReturns.add(chatDetailsDTOReturn);
         }
-
-        return chatDetailsList;
+        return chatDetailsDTOReturns;
     }
 
     @Override
     public List<ChatDetailsDTO> getChatListByReceiverId(Long receiverId) {
-        List<IChatDetails> iChatDetails = repository.getMessageListByReceiverId(receiverId);
-        List<ChatMessageDTO> chatDTOList = new ArrayList<>();
         List<ChatDetailsDTO> chatDetailsList = new ArrayList<>();
-        LinkedHashSet<Long> chatIds = new LinkedHashSet<>();
-        for (IChatDetails chatDetails : iChatDetails) {
-            chatIds.add(chatDetails.getChatId());
+        List<ChatDetailsDTO> chatDetailsDTOReturns = new ArrayList<>();
+//        query big list
+        List<IChatDetails> iChatDetailsList = repository.getMessageListByReceiverId(receiverId);
+//        get chat id unique list
+        LinkedHashSet<Long> chatIdUniqueList = new LinkedHashSet<>();
+        for (IChatDetails iChatDetails : iChatDetailsList) {
+            chatIdUniqueList.add(iChatDetails.getChatId());
         }
-        for (int i = 0; i < chatIds.size(); i++) {
-            for (IChatDetails iChatDetail : iChatDetails) {
+//        create list chat details list with id info only
+        for (Long i : chatIdUniqueList) {
+            ChatDetailsDTO chatDetailsTempDTO = new ChatDetailsDTO();
+            chatDetailsTempDTO.setChatId(i);
+            chatDetailsList.add(chatDetailsTempDTO);
+        }
+        for (ChatDetailsDTO chatDetails : chatDetailsList) {
+            ChatDetailsDTO chatDetailsDTOReturn = new ChatDetailsDTO();
+            List<ChatMessageDTO> chatDTOList = new ArrayList<>();
+//        alter msg list object to chat details list
+            List<IChatDetails> msgByReceiverIdAndChatId = repository.getMessageListByReceiverIdAndChatId(receiverId, chatDetails.getChatId());
+//            each item in chat details list has list of msg
+            for (IChatDetails iChatDetails : msgByReceiverIdAndChatId) {
                 ChatMessageDTO chatDTO = new ChatMessageDTO();
 //            messages
-                chatDTO.setChatId(iChatDetail.getChatId());
-                chatDTO.setSenderId(iChatDetail.getSenderId());
-                chatDTO.setContent(iChatDetail.getContent());
-                chatDTO.setReceiverId(iChatDetail.getChatReceiverId());
-                chatDTO.setCreatedDate(iChatDetail.getCreatedDate());
+                chatDTO.setChatId(iChatDetails.getChatId());
+                chatDTO.setSenderId(iChatDetails.getSenderId());
+                chatDTO.setContent(iChatDetails.getContent());
+                chatDTO.setReceiverId(iChatDetails.getChatReceiverId());
+                chatDTO.setReceiverName(userRepository.getUserEntityByUserId(iChatDetails.getChatReceiverId()).getFullName());
+                chatDTO.setCreatedDate(iChatDetails.getCreatedDate());
                 chatDTOList.add(chatDTO);
-//            others infor
-                ChatDetailsDTO chatDetailsDTO = new ChatDetailsDTO();
-                chatDetailsDTO.setChatId(iChatDetail.getChatId());
-                chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(chatDTO.getReceiverId()).getFullName());
-                chatDetailsDTO.setSenderName(userRepository.getUserEntityByUserId(chatDTO.getSenderId()).getFullName());
-                chatDetailsDTO.setMessages(chatDTOList);
-                chatDetailsList.add(chatDetailsDTO);
             }
+            chatDetailsDTOReturn.setChatId(chatDetails.getChatId());
+            chatDetailsDTOReturn.setReceiverName(userRepository.getUserEntityByUserId(receiverId).getFullName());
+            chatDetailsDTOReturn.setMessages(chatDTOList);
+            chatDetailsDTOReturns.add(chatDetailsDTOReturn);
         }
-        return chatDetailsList;
+        return chatDetailsDTOReturns;
     }
 
     @Override

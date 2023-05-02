@@ -65,9 +65,23 @@ public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
             "         INNER JOIN\n" +
             "     chat_message cm\n" +
             "     on chat.id = cm.chat_id\n" +
-            "WHERE chat_sender_id =:receiverId\n" +
-            " AND cm.chat_id =:chatId" +
-            "GROUP BY chat_id, sender_id, content, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
+            "WHERE sender_id =:senderId AND chat_id =:chatId\n" +
+            "GROUP BY chat_id, sender_id, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
     List<IChatDetails> getMessageListBySenderIdAndChatId(@Param("senderId") Long senderId,
-                                                        @Param("chatId") Long chatId);
+                                                         @Param("chatId") Long chatId);
+
+    @Query(value = "SELECT cm.id,\n" +
+            "       chat_id          AS chatId,\n" +
+            "       sender_id        AS senderId,\n" +
+            "       content,\n" +
+            "       chat_receiver_id AS chatReceiverId,\n" +
+            "       cm.createddate AS createdDate\n" +
+            "FROM chat\n" +
+            "         INNER JOIN\n" +
+            "     chat_message cm\n" +
+            "     on chat.id = cm.chat_id\n" +
+            "WHERE chat_receiver_id =:receiverId AND chat_id =:chatId\n" +
+            "GROUP BY chat_id, sender_id, chat_receiver_id, created_at, updated_at, cm.id", nativeQuery = true)
+    List<IChatDetails> getMessageListByReceiverIdAndChatId(@Param("receiverId") Long receiverId,
+                                                           @Param("chatId") Long chatId);
 }
