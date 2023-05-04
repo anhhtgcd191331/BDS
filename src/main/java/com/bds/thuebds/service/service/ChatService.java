@@ -115,17 +115,37 @@ public class ChatService implements IChatService {
         List<IChatDetails> iChatDetails = repository.getMessageListByChatId(chatId);
         List<ChatMessageDTO> chatDTOList = new ArrayList<>();
         ChatDetailsDTO chatDetailsDTO = new ChatDetailsDTO();
-        for (IChatDetails iChatDetail : iChatDetails) {
+//        for (IChatDetails iChatDetail : iChatDetails) {
+//            ChatMessageDTO chatDTO = new ChatMessageDTO();
+//            chatDTO.setChatId(iChatDetail.getChatId());
+//            chatDTO.setSenderId(iChatDetail.getSenderId());
+//            chatDTO.setContent(iChatDetail.getContent());
+//            chatDTO.setReceiverId(iChatDetail.getChatReceiverId());
+//            chatDTO.setCreatedDate(iChatDetail.getCreatedDate());
+//            chatDTOList.add(chatDTO);
+//            chatDetailsDTO.setChatId(chatId);
+//            chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(chatDTO.getReceiverId()).getFullName());
+//            chatDetailsDTO.setSenderName(userRepository.getUserEntityByUserId(chatDTO.getSenderId()).getFullName());
+//            chatDetailsDTO.setMessages(chatDTOList);
+//        }
+        for (int i = 0; i < iChatDetails.size(); i++) {
             ChatMessageDTO chatDTO = new ChatMessageDTO();
-            chatDTO.setChatId(iChatDetail.getChatId());
-            chatDTO.setSenderId(iChatDetail.getSenderId());
-            chatDTO.setContent(iChatDetail.getContent());
-            chatDTO.setReceiverId(iChatDetail.getChatReceiverId());
-            chatDTO.setCreatedDate(iChatDetail.getCreatedDate());
+            chatDTO.setChatId(iChatDetails.get(i).getChatId());
+            chatDTO.setSenderId(iChatDetails.get(i).getSenderId());
+            chatDTO.setContent(iChatDetails.get(i).getContent());
+            chatDTO.setReceiverId(iChatDetails.get(i).getChatReceiverId());
+            chatDTO.setCreatedDate(iChatDetails.get(i).getCreatedDate());
             chatDTOList.add(chatDTO);
             chatDetailsDTO.setChatId(chatId);
-            chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(chatDTO.getReceiverId()).getFullName());
-            chatDetailsDTO.setSenderName(userRepository.getUserEntityByUserId(chatDTO.getSenderId()).getFullName());
+            if(chatDTO.getSenderId()==chatDTO.getReceiverId() && i >=1){
+                Long receiverId = iChatDetails.get(i-1).getChatReceiverId();
+                Long senderId = iChatDetails.get(i-1).getSenderId();
+                chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(receiverId).getFullName());
+                chatDetailsDTO.setSenderName(userRepository.getUserEntityByUserId(senderId).getFullName());
+            }else {
+                chatDetailsDTO.setReceiverName(userRepository.getUserEntityByUserId(chatDTO.getReceiverId()).getFullName());
+                chatDetailsDTO.setSenderName(userRepository.getUserEntityByUserId(chatDTO.getSenderId()).getFullName());
+            }
             chatDetailsDTO.setMessages(chatDTOList);
         }
         return chatDetailsDTO;

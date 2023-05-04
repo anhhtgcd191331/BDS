@@ -23,7 +23,7 @@ public class DatabaseSearch implements IDatabaseSearch {
 	ApartmentTypeRepository apartmentTypeRepository;
 
 	public List<PostDTO> search(LinkedHashMap<String, Object> map) throws SQLException {
-		String url = "jdbc:postgresql://localhost:5435/bds";
+		String url = "jdbc:postgresql://localhost:5432/bds";
 		String username = "root";
 		String password = "root";
 		String tableName = "post_apartment";
